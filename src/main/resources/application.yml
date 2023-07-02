@@ -26,6 +26,14 @@ namnd:
     jwtSecret: bezKoderSecretKey
     jwtExpiration: 86400000
 
+application:
+  redis:
+    host: localhost
+    port: 6379
+    enable: true
+    maxTotal: 100
+    timeout: 600000
+
 
 logging:
   level:
