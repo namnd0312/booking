@@ -12,8 +12,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 @Configuration
 @ConditionalOnProperty(value = "application.redis.enable", havingValue = "true")
 public class RedisConfig {
-
-
     private final ApplicationProperties applicationProperties;
 
     public RedisConfig(ApplicationProperties applicationProperties) {
