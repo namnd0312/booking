@@ -1,4 +1,4 @@
-package com.namnd;
+package com.namnd.bookingbe;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
