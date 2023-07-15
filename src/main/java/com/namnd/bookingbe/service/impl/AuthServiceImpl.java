@@ -13,6 +13,7 @@ import com.namnd.bookingbe.model.User;
 import com.namnd.bookingbe.service.JwtService;
 import com.namnd.bookingbe.service.RoleService;
 import com.namnd.bookingbe.service.UserService;
+import com.namnd.bookingbe.utils.CustomValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +23,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.validation.Valid;
 import java.util.Optional;
 import java.util.Set;
 
@@ -48,7 +51,7 @@ public class AuthServiceImpl implements RequestHandler {
     private AuthenticationManager authenticationManager;
 
     @RequestType(value = "login")
-    public ResponseApi<JwtResponseDto> authenticateUser(User req) {
+    public ResponseApi<JwtResponseDto> authenticateUser(@Valid @CustomValidation User req) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

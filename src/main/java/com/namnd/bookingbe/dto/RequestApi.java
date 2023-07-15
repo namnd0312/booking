@@ -14,7 +14,7 @@ import javax.validation.constraints.NotEmpty;
 @Setter
 @Builder
 
-public class RequestApi <T>{
+public class RequestApi <@Valid T>{
 
     @NotEmpty
     @JsonInclude(JsonInclude.Include.NON_NULL)
