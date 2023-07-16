@@ -13,6 +13,7 @@ import com.namnd.bookingbe.utils.Utils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 
 @Service
+@Transactional
 public class CommentServiceImpl implements CommentService {
 
     private final CommentMapper commentMapper;

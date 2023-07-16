@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 import static com.namnd.bookingbe.Enum.ErrorCode.NOT_FOUND;
 
 @Service
+@Transactional
 public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
