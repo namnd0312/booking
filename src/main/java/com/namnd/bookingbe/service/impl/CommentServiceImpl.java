@@ -4,6 +4,7 @@ import com.namnd.bookingbe.Enum.ErrorCode;
 import com.namnd.bookingbe.config.custom.LogicException;
 import com.namnd.bookingbe.dto.CommentDTO;
 import com.namnd.bookingbe.dto.ResponseApi;
+import com.namnd.bookingbe.dto.UpdateCommentDTO;
 import com.namnd.bookingbe.dto.mapper.CommentMapper;
 import com.namnd.bookingbe.model.Comment;
 import com.namnd.bookingbe.repository.CommentRepository;
@@ -12,8 +13,10 @@ import com.namnd.bookingbe.utils.Utils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -28,36 +31,18 @@ public class CommentServiceImpl implements CommentService {
         this.commentRepository = commentRepository;
     }
 
-
     @Override
-    public List<Comment> finAllCommentsByProductId(Long productId) {
-        return null;
+    public ResponseApi<Comment> updateComment(UpdateCommentDTO commentDTO) {
+        Comment entityFound = commentRepository.findById(UUID.fromString(commentDTO.getId()))
+                .orElseThrow(() -> new LogicException(ErrorCode.NOT_FOUND));
+
+
+        Comment newEntityMapper = this.commentMapper.toEntity(entityFound, commentDTO);
+        newEntityMapper.setTimeUpdate(Instant.now());
+        Comment newEntity = this.commentRepository.save(newEntityMapper);
+        return new ResponseApi().ok(newEntity);
     }
 
-    @Override
-    public Comment saveRoom(CommentDTO commentDTO) {
-        return null;
-    }
-
-    @Override
-    public CommentDTO findById(UUID id) {
-        return null;
-    }
-
-    @Override
-    public List<CommentDTO> findAllById(UUID id) {
-        return null;
-    }
-
-    @Override
-    public List<CommentDTO> findAll() {
-        return null;
-    }
-
-    @Override
-    public void deleteRoomById(UUID id) {
-
-    }
 
     @Override
     public ResponseApi<CommentDTO> addNewComment(CommentDTO commentDTO) {
@@ -83,7 +68,9 @@ public class CommentServiceImpl implements CommentService {
         commentDTO.setLeftKey(Utils.longToString(newCommentLeftKey));
         commentDTO.setRightKey(Utils.longToString(newCommentRightKey));
 
-        Comment newComment = commentRepository.save(commentMapper.toEntity(commentDTO));
+        Comment newEntity = commentMapper.toEntity(commentDTO);
+        newEntity.setTimeCreate(Instant.now());
+        Comment newComment = commentRepository.save(newEntity);
 
         // Cập nhật right key của comment cha
         if (parentComment != null) {
@@ -94,9 +81,40 @@ public class CommentServiceImpl implements CommentService {
         return new ResponseApi().ok(newComment);
     }
 
+    @Override
+    public ResponseApi<Void> deleteComment(String commentId) {
+            Comment comment = commentRepository.findById(UUID.fromString(commentId))
+                    .orElseThrow(() -> new LogicException(ErrorCode.NOT_FOUND));
 
+        long leftKey = comment.getLeftKey();
+        long rightKey = comment.getRightKey();
+        long shiftBy = (rightKey - leftKey + 1);
 
-    public List<Comment> getAllComments() {
-        return commentRepository.findAll();
+        commentRepository.deleteNode(leftKey, rightKey);
+
+        commentRepository.shiftLeftKeysAbstract(leftKey, shiftBy);
+        commentRepository.shiftRightKeysAbstract(rightKey, shiftBy);
+
+        return new ResponseApi().ok();
     }
+
+    @Override
+    public ResponseApi<List<CommentDTO>> findAllByProductId(String id) {
+
+        List<CommentDTO> commentDTOS = this.commentRepository.findAllByRoomIdAndParentIdIsNull(Utils.stringToLong(id))
+                .stream()
+                .map(this.commentMapper::toDTO)
+                .collect(Collectors.toList());
+        return new ResponseApi().ok(commentDTOS);
+    }
+
+    @Override
+    public ResponseApi<List<CommentDTO>>  findAllByParentId(String parentId) {
+        List<CommentDTO> commentDTOS = this.commentRepository.findAllByParentId(parentId)
+                .stream()
+                .map(this.commentMapper::toDTO)
+                .collect(Collectors.toList());
+        return new ResponseApi().ok(commentDTOS);
+    }
+
 }

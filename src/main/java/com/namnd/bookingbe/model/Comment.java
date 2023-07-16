@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.UUID;
 
 @Entity
@@ -30,7 +31,13 @@ public class Comment {
     @Column(name = "right_key")
     private Long rightKey;
 
-    @OneToOne
+    @Column(name = "time_create", nullable = false)
+    private Instant timeCreate;
+
+    @Column(name = "time_update")
+    private Instant timeUpdate;
+
+    @OneToOne( fetch = FetchType.LAZY)
     private Room room;
 
 }

@@ -4,6 +4,10 @@ package com.namnd.bookingbe.utils;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Component
 public class Utils {
@@ -27,5 +31,15 @@ public class Utils {
             // Xử lý ngoại lệ nếu chuỗi không thể chuyển đổi thành long
             throw new IllegalArgumentException("Invalid long value: " + str);
         }
+    }
+
+    public static String instantToString(Instant instant) {
+//        Instant instant = Instant.now();
+
+        ZoneId zoneId = ZoneId.of("Asia/Ho_Chi_Minh");
+        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, zoneId);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        return formatter.format(zonedDateTime);
     }
 }

@@ -2,6 +2,7 @@ package com.namnd.bookingbe.dto.mapper;
 
 
 import com.namnd.bookingbe.dto.CommentDTO;
+import com.namnd.bookingbe.dto.UpdateCommentDTO;
 import com.namnd.bookingbe.model.Comment;
 import com.namnd.bookingbe.utils.Utils;
 import org.springframework.beans.BeanUtils;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.util.UUID;
+
+import static com.namnd.bookingbe.utils.Utils.instantToString;
 
 @Component
 public class CommentMapper {
@@ -37,6 +40,17 @@ public class CommentMapper {
         return entity;
     }
 
+
+    public Comment toEntity(Comment entity, UpdateCommentDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        BeanUtils.copyProperties(dto, entity);
+
+        return entity;
+    }
+
     public CommentDTO toDTO(Comment entity) {
         if (entity == null) {
             return null;
@@ -45,7 +59,8 @@ public class CommentMapper {
         CommentDTO dto = new CommentDTO();
 
         BeanUtils.copyProperties(entity, dto);
-        if(dto.getId() != null){
+
+        if(entity.getId() != null){
             dto.setId(entity.getId().toString());
         }
 
@@ -55,6 +70,14 @@ public class CommentMapper {
 
         if(entity.getRightKey() != null){
             dto.setRightKey(Utils.longToString(entity.getRightKey()));
+        }
+
+        if(entity.getTimeCreate() != null){
+            dto.setTimeCreate(instantToString(entity.getTimeCreate()));
+        }
+
+        if(entity.getTimeUpdate() != null){
+            dto.setTimeUpdate(instantToString(entity.getTimeUpdate()));
         }
 
         return dto;
