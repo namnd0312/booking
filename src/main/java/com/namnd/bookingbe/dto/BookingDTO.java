@@ -1,7 +1,6 @@
 package com.namnd.bookingbe.dto;
 
 
-import com.namnd.bookingbe.model.User;
 import lombok.Getter;
 import lombok.Setter;
 

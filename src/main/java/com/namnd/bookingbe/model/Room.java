@@ -1,15 +1,14 @@
 package com.namnd.bookingbe.model;
 
 
+import com.namnd.bookingbe.Enum.RoomStatus;
 import com.namnd.bookingbe.Enum.TypeOfRoom;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,8 +23,12 @@ public class Room {
 
     private TypeOfRoom roomType;
 
-    private int capacity;
+//    private int capacity;
 
     private BigDecimal pricePerNight;
 
+    private RoomStatus status;
+
+    @OneToMany
+    private List<Comment> comments;
 }

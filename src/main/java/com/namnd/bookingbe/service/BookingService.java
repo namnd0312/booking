@@ -1,6 +1,7 @@
 package com.namnd.bookingbe.service;
 
 import com.namnd.bookingbe.dto.BookingDTO;
+import com.namnd.bookingbe.model.Booking;
 
 public interface BookingService {
 
@@ -8,6 +9,5 @@ public interface BookingService {
 
     void deleteBooking(String bookingId);
 
-    void createBooking(BookingDTO bookingDTO);
-    void updateBooking(BookingDTO bookingDTO);
+    Booking saveBooking(BookingDTO bookingDTO);
 }

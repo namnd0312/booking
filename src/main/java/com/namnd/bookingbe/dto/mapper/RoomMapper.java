@@ -7,8 +7,16 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.util.stream.Collectors;
+
 @Component
 public class RoomMapper {
+
+    private final CommentMapper commentMapper;
+
+    public RoomMapper(CommentMapper commentMapper) {
+        this.commentMapper = commentMapper;
+    }
 
     public Room toEntity(RoomDTO dto) {
         if (dto == null) {
@@ -26,9 +34,9 @@ public class RoomMapper {
             entity.setPricePerNight(Utils.stringToBigDecimal(dto.getPricePerNight()));
         }
 
-        if(StringUtils.hasText(dto.getCapacity())){
-            entity.setCapacity(Integer.parseInt(dto.getCapacity()));
-        }
+//        if(StringUtils.hasText(dto.getCapacity())){
+//            entity.setCapacity(Integer.parseInt(dto.getCapacity()));
+//        }
         return entity;
     }
 
@@ -49,9 +57,13 @@ public class RoomMapper {
             dto.setPricePerNight(Utils.bigDecimalToString(entity.getPricePerNight()));
         }
 
-        if (entity.getCapacity() != 0) {
-            dto.setCapacity(String.valueOf(entity.getCapacity()));
+        if (entity.getComments().size() > 0){
+            dto.setComments(entity.getComments().stream().map(commentMapper::toDTO).collect(Collectors.toList()));
         }
+
+//        if (entity.getCapacity() != 0) {
+//            dto.setCapacity(String.valueOf(entity.getCapacity()));
+//        }
 
         return dto;
     }
