@@ -6,10 +6,14 @@ import com.namnd.bookingbe.dto.RoomDTO;
 import com.namnd.bookingbe.model.Room;
 import com.namnd.bookingbe.service.RoomService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.print.attribute.standard.Media;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/v1/room")
@@ -21,10 +25,10 @@ public class RoomController {
         this.roomService = roomService;
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<ResponseApi<Room>> saveRoom(@Valid @RequestBody RoomDTO roomDTO) {
+    @PostMapping(value = "/save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<ResponseApi<Room>> saveRoom(@RequestPart("files") MultipartFile[] files, @RequestPart("roomDTO") RoomDTO roomDTO) throws IOException {
 
-        return ResponseEntity.ok(this.roomService.saveRoom(roomDTO));
+        return ResponseEntity.ok(this.roomService.saveRoom(files, roomDTO));
     }
 
     @DeleteMapping("/{id}")

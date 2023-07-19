@@ -1,6 +1,11 @@
 server:
   port: 8080
 spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
   jpa:
     hibernate:
       ddl-auto: update
@@ -51,3 +56,10 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
+
+firebase:
+  config:
+    private-key-location: /Users/admin/Desktop/DEV/BACK_END/booking-BE/src/main/resources/serviceAccountKey.json
+    project-id: booking-bdcfb
+
+
