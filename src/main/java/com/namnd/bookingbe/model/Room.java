@@ -31,4 +31,15 @@ public class Room {
 
     @OneToMany
     private List<Comment> comments;
+
+    private String address;
+
+    @Column(name = "province_code")
+    private String provinceCode;
+
+    @Column(name = "district_code")
+    private String districtCode;
+
+    @Column(name = "ward_code")
+    private String wardCode;
 }

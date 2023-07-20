@@ -62,13 +62,13 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public ResponseApi<RoomDTO> findById(Long roomId) {
 
-        Room room = this.roomRepository.findById(roomId).orElse(null);
+        RoomDTO room = this.roomRepository.findRoomById(roomId).orElse(null);
 
         if (room == null) {
             throw new LogicException(NOT_FOUND);
         }
-        RoomDTO result = this.roomRepository.findById(roomId).map(roomMapper::toDTO).get();
-        return  new ResponseApi().ok(result);
+
+        return  new ResponseApi().ok(room);
     }
 
     @Override
