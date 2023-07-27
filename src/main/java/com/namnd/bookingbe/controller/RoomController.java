@@ -1,8 +1,10 @@
 package com.namnd.bookingbe.controller;
 
 
+import com.namnd.bookingbe.dto.BaseSearchDTO;
 import com.namnd.bookingbe.dto.ResponseApi;
 import com.namnd.bookingbe.dto.RoomDTO;
+import com.namnd.bookingbe.dto.SearchRoomsDTO;
 import com.namnd.bookingbe.model.Room;
 import com.namnd.bookingbe.service.RoomService;
 import org.springframework.http.HttpStatus;
@@ -46,4 +48,10 @@ public class RoomController {
     public ResponseEntity<?> findAllRoom() {
         return new ResponseEntity<>(this.roomService.findAll(), HttpStatus.OK);
     }
+
+    @PostMapping("/get-all-by-condition")
+    public ResponseEntity<?> findAllRoomByCondition(@RequestBody SearchRoomsDTO searchRoomsDTO) {
+        return new ResponseEntity<>(this.roomService.findAllRoomByCondition(searchRoomsDTO), HttpStatus.OK);
+    }
+
 }

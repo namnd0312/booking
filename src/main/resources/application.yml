@@ -20,10 +20,21 @@ spring:
     password: postgres
     platform: org.hibernate.dialect.PostgreSQLDialect
 
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 1089359077505-1a62pv573amhgfai1a09sq02e08vsng5.apps.googleusercontent.com
+            clientSecret: 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
+
   social:
     facebook:
       appId: 831265784439872
       appSecret: d2d34c78730af03f1186d2b494efaca7
+    google:
+      appId: 956229757248-299ehnhes3ibk0b1thtc17irglf755vj.apps.googleusercontent.com
+      appSecret: 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
 
   # App Properties
 namnd:
@@ -61,5 +72,8 @@ firebase:
   config:
     private-key-location: /Users/admin/Desktop/DEV/BACK_END/booking-BE/src/main/resources/serviceAccountKey.json
     project-id: booking-bdcfb
+
+
+
 
 

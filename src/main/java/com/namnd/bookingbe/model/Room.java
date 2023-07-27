@@ -42,4 +42,8 @@ public class Room {
 
     @Column(name = "ward_code")
     private String wardCode;
+
+//    private String mainPicture;
+//
+//    private String pictureDetails;
 }

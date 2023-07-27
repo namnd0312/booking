@@ -26,22 +26,26 @@ public class FirebaseStorageServiceImpl implements FirebaseStorageService {
     private String privateKeyLocation;
     @Override
     public String uploadFile(MultipartFile multipartFile) throws IOException {
-//        Credentials credentials = GoogleCredentials.fromStream(new FileInputStream("downloaded private key JSON file path"));
-        Credentials credentials = GoogleCredentials.fromStream(new FileInputStream(privateKeyLocation));
-        Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
-        String fileName = multipartFile.getOriginalFilename();
+        try{
+            Credentials credentials = GoogleCredentials.fromStream(new FileInputStream(privateKeyLocation));
+            Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
+            String fileName = multipartFile.getOriginalFilename();
 
-        String bucketName = "booking-bdcfb.appspot.com";
-        BlobId blobId = BlobId.of(bucketName, fileName);
-        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("media").build();
+            String bucketName = "booking-bdcfb.appspot.com";
+            BlobId blobId = BlobId.of(bucketName, fileName);
+            BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("media").build();
 
-        File file = convertToFile(multipartFile, fileName);
-        storage.create(blobInfo, Files.readAllBytes(file.toPath()));
+            File file = convertToFile(multipartFile, fileName);
+            storage.create(blobInfo, Files.readAllBytes(file.toPath()));
 
-        String url =  String.format("https://firebasestorage.googleapis.com/v0/b/booking-bdcfb.appspot.com/o/%s?alt=media", URLEncoder.encode(fileName, StandardCharsets.UTF_8));
+            String url =  String.format("https://firebasestorage.googleapis.com/v0/b/booking-bdcfb.appspot.com/o/%s?alt=media", URLEncoder.encode(fileName, StandardCharsets.UTF_8));
 
-        System.out.println(url);
-        return "File uploaded successfully to Firebase Storage";
+            System.out.println(url);
+            System.out.println("File uploaded successfully to Firebase Storage");
+            return url;
+        }catch (Exception e){
+            return null;
+        }
     }
 
 

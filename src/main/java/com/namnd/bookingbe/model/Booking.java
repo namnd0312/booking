@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Set;
 
@@ -22,6 +23,8 @@ public class Booking {
     private Instant endDate;
 
     private String note;
+
+    private BigDecimal totalPayment;
 
     @ManyToOne
     private Room room;

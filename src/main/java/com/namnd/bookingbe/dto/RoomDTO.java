@@ -43,12 +43,18 @@ public class RoomDTO {
 
     private String wardCode;
 
+
+
     public RoomDTO() {
     }
 
 
-
-
+    public RoomDTO(String id, TypeOfRoom roomType, String pricePerNight, RoomStatus status) {
+        this.id = id;
+        this.roomType = roomType;
+        this.pricePerNight = pricePerNight;
+        this.status = status;
+    }
 
     public RoomDTO(String id, String roomNumber, TypeOfRoom roomType, String pricePerNight, RoomStatus status, String address, String fullAddress) {
         this.id = id;

@@ -2,6 +2,7 @@ package com.namnd.bookingbe.utils;
 
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -17,6 +18,11 @@ public class Utils {
     }
 
     public static BigDecimal stringToBigDecimal(String str) {
+
+        if(!StringUtils.hasText(str)){
+            return null;
+        }
+
         return new BigDecimal(str);
     }
 

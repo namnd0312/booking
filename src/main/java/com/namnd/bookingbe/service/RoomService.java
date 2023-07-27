@@ -1,7 +1,9 @@
 package com.namnd.bookingbe.service;
 
+import com.namnd.bookingbe.dto.PageDataResDTO;
 import com.namnd.bookingbe.dto.ResponseApi;
 import com.namnd.bookingbe.dto.RoomDTO;
+import com.namnd.bookingbe.dto.SearchRoomsDTO;
 import com.namnd.bookingbe.model.Room;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,6 +16,7 @@ public interface RoomService {
     ResponseApi<RoomDTO> findById(Long roomId);
     ResponseApi<List<RoomDTO>> findAllById(Long roomId);
     ResponseApi<List<RoomDTO>> findAll();
+    ResponseApi<PageDataResDTO> findAllRoomByCondition(SearchRoomsDTO searchRoomsDTO);
 
     ResponseApi<Void> deleteRoomById(Long id);
 }
