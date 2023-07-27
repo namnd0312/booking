@@ -72,8 +72,3 @@ firebase:
   config:
     private-key-location: /Users/admin/Desktop/DEV/BACK_END/booking-BE/src/main/resources/serviceAccountKey.json
     project-id: booking-bdcfb
-
-
-
-
-
