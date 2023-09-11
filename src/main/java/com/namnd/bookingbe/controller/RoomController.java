@@ -28,7 +28,7 @@ public class RoomController {
     }
 
     @PostMapping(value = "/save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<ResponseApi<Room>> saveRoom(@RequestPart("files") MultipartFile[] files, @RequestPart("roomDTO") RoomDTO roomDTO) throws IOException {
+    public ResponseEntity<ResponseApi<Room>> saveRoom(@RequestPart("files") MultipartFile[] files, @Valid @RequestPart("roomDTO") RoomDTO roomDTO) throws IOException {
 
         return ResponseEntity.ok(this.roomService.saveRoom(files, roomDTO));
     }
@@ -50,7 +50,7 @@ public class RoomController {
     }
 
     @PostMapping("/get-all-by-condition")
-    public ResponseEntity<?> findAllRoomByCondition(@RequestBody SearchRoomsDTO searchRoomsDTO) {
+    public ResponseEntity<?> findAllRoomByCondition(@RequestBody @Valid  SearchRoomsDTO searchRoomsDTO) {
         return new ResponseEntity<>(this.roomService.findAllRoomByCondition(searchRoomsDTO), HttpStatus.OK);
     }
 

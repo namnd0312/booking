@@ -1,6 +1,13 @@
+#  http://127.0.0.1:5601/app/home#/
+#  b3XqerUKYrb_CE+hn5XJ
+#  elastic
 server:
   port: 8080
 spring:
+  data:
+    elasticsearch:
+      cluster-nodes: localhost:9200
+      cluster-name: namnd
   servlet:
     multipart:
       enabled: true
@@ -61,6 +68,8 @@ logging:
           core:
             JdbcTemplate: DEBUG
             StatementCreatorUtils: TRACE
+        data:
+          elasticsearch: DEBUG
       hibernate:
         SQL: DEBUG
         type:

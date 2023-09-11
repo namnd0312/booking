@@ -1,7 +1,7 @@
 package com.namnd.bookingbe.Enum;
 
 public enum ErrorCode {
-    INVALID_INPUT("1001", "Invalid input"),
+    INVALID_INPUT("1001", "Invalid input: %s"),
     NOT_FOUND("1002", "Not found"),
     INTERNAL_ERROR("1003", "Internal server error"),
 
